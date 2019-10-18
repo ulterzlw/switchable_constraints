@@ -70,7 +70,7 @@ int main(int argc, char **argv) {
       v_s.emplace_back(s);
       ceres::CostFunction *cost_function = LoopClosureFunctor::Creat(edge);
       problem.AddResidualBlock(cost_function,
-                               new ceres::HuberLoss(0.1), pose_i.data(), pose_j.data(), &v_s.back());
+                               NULL, pose_i.data(), pose_j.data(), &v_s.back());
 
       double gamma = 1;
       v_gamma.emplace_back(gamma);
@@ -79,7 +79,7 @@ int main(int argc, char **argv) {
       problem.AddResidualBlock(cost_function1,NULL,&v_s.back());
 
       //no robust
-      problem.SetParameterBlockConstant(&v_s.back());
+//      problem.SetParameterBlockConstant(&v_s.back());
 
       problem.SetParameterLowerBound(&v_s.back(),0,0);
       problem.SetParameterUpperBound(&v_s.back(),0,1);
